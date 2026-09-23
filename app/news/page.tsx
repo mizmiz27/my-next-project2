@@ -1,7 +1,18 @@
 import { getNewsList } from "../_libs/microcms";
 import NewsList from "@/app/_components/NewsList";
+import Pagenation from "../_components/Pagenation";
+import SearchField from "@/app/_components/SearchField";
+import { NEWS_LIST_LIMIT } from "@/app/_constants";
 
 export default async function Page() {
-  const { contents: news } = await getNewsList();
-  return <NewsList news={news} />;
+  const { contents: news, totalCount } = await getNewsList({
+    limit: NEWS_LIST_LIMIT,
+  });
+  return (
+    <>
+      <SearchField />
+      <NewsList news={news} />
+      <Pagenation totalCount={totalCount} />
+    </>
+  );
 }
